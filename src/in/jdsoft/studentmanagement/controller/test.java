@@ -2,9 +2,12 @@ package in.jdsoft.studentmanagement.controller;
 
 public class test {
 	
-	
-	
-	
-	//test-22-02-2016
+  public void add(){
+	  System.out.println("addition");
+  }
+  
+  public void sub(){
+	  System.out.println("subtraction");
+  }
 
 }
