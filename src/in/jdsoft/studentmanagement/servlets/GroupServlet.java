@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import in.jdsoft.studentmanagement.controller.CourseController;
 import in.jdsoft.studentmanagement.controller.GroupController;
 import in.jdsoft.studentmanagement.controller.GroupMappingController;
 import in.jdsoft.studentmanagement.model.CourseSemester;
+import in.jdsoft.studentmanagement.model.Courses;
 import in.jdsoft.studentmanagement.model.Group;
 
 @WebServlet("/GroupServlet")
