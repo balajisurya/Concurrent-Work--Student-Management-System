@@ -53,7 +53,7 @@
         	 $('#grouplist td a#delete').click(function() {
         		   var groupid = $(this).attr('data-id');
         		   $('#confirm-delete').on('show.bs.modal', function (e) {
-        			   $('#deleteCourse').attr("href", "GroupServlet?groupId="+groupid+"&action=delete");
+        			   $('#deletegroup').attr("href", "GroupServlet?groupId="+groupid+"&action=delete");
         			});
         		   
         		});
@@ -78,23 +78,23 @@
         	 });
         	
         	//edit
-        	 $('#courselist td a#edit').click(function() {
+        	 $('#grouplist td a#edit').click(function() {
         		var courseid = $(this).attr('data-id');
         		
         		//retrive to display
         	   $('#confirm-edit').on('show.bs.modal', function (e) {
-      			 $.get('CourseServlet',{action:"reterive",courseId:courseid},function(response){
-      				  $("#edityear").val(response.duration_in_years);
-     		    	  $("#editcoursename").val(response.course_name);
-     		    	  $("#editsem").val(response.duration_in_semesters);
+      			 $.get('GroupServlet',{action:"reterive",groupId:groupid},function(response){
+      				  $("#editgroup-name").val(response.group_name);
+     		    	  $("#courseSemList").val(response.course_id);
+     		    	 
      		    	
      		      });
       			//update code
       			
-      			 $("#updateCourse").click(function(event){
-      				 var data=$('#courseUpdateModal').serialize()+"&action=update"+"&courseId="+courseid;
-	             		 $.post("CourseServlet",data,function(data) {
-	             			 window.location.href="course.jsp";
+      			 $("#updategroup").click(function(event){
+      				 var data=$('#GroupUpdateModal').serialize()+"&action=update"+"&groupId="+groupid;
+	             		 $.post("GroupServlet",data,function(data) {
+	             			 window.location.href="groups.jsp";
 	                      });
       			   });
       			});
@@ -135,7 +135,7 @@
  					<h3>Groups Created[<%out.print(groupCount);%>]</h3>
  					<div  class="x_panel">
      					<div class="table-responsive">
-    <table  id="table" class="table table-bordered table-striped">
+    <table  id="grouplist" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>S.NO</th>
@@ -151,17 +151,17 @@
  				int studentCount=28;
  				for(Group group:groups){	
  		%>
-            <tr>
+            <tr id="grouplist">
                 <td style="width:100px"><%out.print(SNO);%></td>
                 <td><%out.print(group.getGroupName());%></td>
                 <td style="width:150px"><%out.print(studentCount);%></td>
                 <td style="width: 250px">
                   
              
-                   <a href="#"  data-href="#" data-id="" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#confirm-edit">
+                   <a href="#" id="edit" data-href="#" data-id="<%out.print(group.getGroupId()); %>" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#confirm-edit">
                            <span class="glyphicon glyphicon-edit"></span> 
                    </a>
-                   <a href="#"  data-href="#" data-id="" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirm-delete">
+                   <a href="#" id="delete" data-href="#" data-id="<%out.print(group.getGroupId()); %>" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirm-delete">
                            <span class="glyphicon glyphicon-trash"></span> 
                    </a>
                 </td>
@@ -214,12 +214,12 @@
                <h4>Edit Group</h4> 
             </div>
             <div class="modal-body">
-                 <form class="form-horizontal" role="form">
+                 <form id="groupUpdateModal" class="form-horizontal" role="form">
                   		   <div class="form-group">
-                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="group-name">Group Name <span class="required">*</span>
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editgroup-name">Group Name <span class="required">*</span>
                                    </label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
-                                         <input name="group-name" type="text" id="editgroup-name" required class="form-control col-md-7 col-xs-12">
+                                         <input name="editgroup-name" type="text" id="editgroup-name" required class="form-control col-md-7 col-xs-12">
                                      </div>
                               </div>
                          <div class="form-group">
@@ -229,12 +229,12 @@
                                             
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Group</label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <select  name="courseSemList"class="select2_multiple form-control" multiple="multiple" style="width:400px" >
+                                                <select id="courseSemList" name="courseSemList"class="select2_multiple form-control" multiple="multiple" style="width:400px" >
                                                <%
                                                  int courseSemestersCount1=courseSemesterList.size();
                               					if(courseSemestersCount1>0){
-                             					                            					 for(CourseSemester courseSem:courseSemesterList){
-                            					 if(courseSem.getLockStatus()!=1){%>
+                             					                            					 for(CourseSemester courseSem:courseSemesterList){%>
+                            					 
                                                     <option value="<%out.print(courseSem.getCourseSemesterId());%>"><%out.print(courseController.courseDetailsFromId(courseSem.getCourseId()).get("course_name")+"  "+"Semester"+" "+courseSem.getCourseSemester());%></option>
                                                    <%}
                               					 }                             					 }
@@ -247,7 +247,7 @@
                         
                         <div class="modal-footer">
                         
-                		<button type="submit" class="btn btn-round btn-success" >Update</button>
+                		<button type="button" id="updategroup" class="btn btn-round btn-success" >Update</button>
                       </div>
                  </form>
     
