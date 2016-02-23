@@ -13,6 +13,7 @@ import in.jdsoft.studentmanagement.controller.CurrencyController;
 import in.jdsoft.studentmanagement.controller.FeesTemplateController;
 import in.jdsoft.studentmanagement.controller.GroupController;
 import in.jdsoft.studentmanagement.controller.GroupMappingController;
+import in.jdsoft.studentmanagement.controller.InstitutionController;
 import in.jdsoft.studentmanagement.controller.LoginController;
 import in.jdsoft.studentmanagement.controller.MenuController;
 import in.jdsoft.studentmanagement.controller.ReceiptController;
@@ -108,6 +109,9 @@ public class DBInit extends HttpServlet {
         
         FeesFeeder feesFeeder=new FeesFeeder();
         feesFeeder.getDbAccess(sc);
+        
+        InstitutionController institutionController=new InstitutionController();
+        institutionController.getDbAccess(sc);
         
     }
 

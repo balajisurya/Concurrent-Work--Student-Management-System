@@ -54,10 +54,11 @@ else{%>
          
         	 $('#in-submit').click(function(){
         		 
-        		 var data=$('#formreg').serialize()+"&action=save";
-        		 $.post("InstitutionServlet",data,function(data) {
-        			 window.location.href="dashboard.jsp";
-                 });
+        		 $('#formreg').submit();
+        		 //var data=$('#formreg').serialize()+"&action=save";
+        		 //$.post("InstitutionServlet",data,function(data) {
+        			// window.location.href="dashboard.jsp";
+                 //});
         	});
         });
       </script>
@@ -94,7 +95,12 @@ else{%>
                </div>
                 <div class="x_content">
                     <br />
-                    <form id="formreg"  class="form-horizontal form-label-left">
+                    <%if(request.getAttribute("errorMessage")!=null){%>
+                    <div class="alert alert-danger">
+                    <strong>Error!</strong>
+                     ${errorMessage}
+                     </div><%}%>
+                    <form id="formreg" action="${pageContext.request.contextPath}/InstitutionServlet" class="form-horizontal form-label-left" enctype="multipart/form-data" method="post">
           
                          <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Institution Name <span class="required">*</span>
@@ -110,7 +116,7 @@ else{%>
                                   	<input type="text" id="institute-desc" name="institute-desc" required="required" class="form-control col-md-7 col-xs-12">
                                  </div>
                                 </div>   
-                                   
+                                   <input type="hidden" name="action" value="save">
                             	<div class="form-group">
                                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image_path">Institute Logo <span class="required">*</span>
                                        </label>
