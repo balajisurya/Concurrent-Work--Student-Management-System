@@ -237,7 +237,7 @@
                             					 
                                                     <option value="<%out.print(courseSem.getCourseSemesterId());%>"><%out.print(courseController.courseDetailsFromId(courseSem.getCourseId()).get("course_name")+"  "+"Semester"+" "+courseSem.getCourseSemester());%></option>
                                                    <%}
-                              					 }                             					 }
+                              					 }                             					 
                               					 else{%>
                               					 <option></option>
                               					 <%} %>  
